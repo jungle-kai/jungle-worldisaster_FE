@@ -1,11 +1,12 @@
-# 세계 재난재해 실시간 알림 및 아카이브 서비스, WorlDisaster
+# Worldwide Disasters Alert & Archives
 
-- 기간 <br>
+SW Academy Jungle (Kaist)
 2023.11.08 ~ 2023.12.16
 
-- 멤버 <br>
-김호집(팀장/백엔드), 김기영(백엔드), 이유정(백엔드), 김지성(프론트엔드), 김초원(프론트엔드)
+A project by:
+김호집(BE), 김기영(BE), 이유정(BE), 김지성(FE), 김초원(FE)
 
+Documentation (if available):
 - 발표자료 <br>
   - [💻 https://worldisaster.com/
 ](https://worldisaster.com/)
