@@ -25,12 +25,12 @@ const LeftSidebar: React.FC<DetailProps> = ({ dID }) => {
   if (dID === null) return null;
 
   const handleUploadComplete = (videoUrl: string) => {
-    console.log("Uploaded video URL:", videoUrl);
+    // console.log("Uploaded video URL:", videoUrl);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setAlertPoint(leftSidebar.activeIcon)
-  },[leftSidebar.activeIcon])
+  }, [leftSidebar.activeIcon])
 
   return (
     <div className={`w-full pt-20 md:pt-5 md:w-[500px] leftSidebar custom-scrollbar h-screen overflow-auto ${leftSidebar.isOpen ? 'block' : 'hidden'} ${isDarkMode ? 'darkMode' : ''}`}>

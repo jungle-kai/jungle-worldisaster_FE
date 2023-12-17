@@ -50,7 +50,7 @@ const Support: React.FC = () => {
             withCredentials: true,
           }
         });
-        console.log('Log: Successfully loaded donations history', res);
+        // console.log('Log: Successfully loaded donations history', res);
         setDisasters(res.data);
       } catch (error) {
         console.error('Log: Failed to load donations history', error);
@@ -131,7 +131,7 @@ const Support: React.FC = () => {
           }
         });
         setDonationHistory(res.data);
-        console.log('Log: Successfully loaded your donation history:', res);
+        // console.log('Log: Successfully loaded your donation history:', res);
       } catch (error) {
         console.error('Log: Failed to load your donation history:', error);
       }

@@ -25,6 +25,7 @@ interface User {
 
 /* 실제 모듈 */
 const ChatModule = () => {
+
   /* 유저 로그인상태 확인 */
   const loginState = useRecoilValue(userLoginState);
   const user = loginState.isLoggedIn ? (loginState.userInfo as User) : null;
@@ -34,8 +35,10 @@ const ChatModule = () => {
   const [chat, setChat] = useState<ChatMessage[]>([]); // 채팅 히스토리
   const [messageListArray, setMessageListArray] = useState<any>([]); // react-chat-element 전용 리스트
   const messageListRef = useRef(); // react-chat-element에서 필요한 Reference 선언
+
   /* 웹소켓 연결 기능 */
   useEffect(() => {
+
     /* 소켓 연결이 없어야만 연결 시도 */
     if (!socketRef.current) {
       socketRef.current = io('https://worldisaster.com/chats', {
@@ -44,17 +47,20 @@ const ChatModule = () => {
         transports: ['websocket'], // 트랜스포트 방식을 "websocket"으로 지정
       });
     }
+
     /* 소켓 연결에 성공하면 본격적으로 소켓 기능들 접근 */
     if (socketRef.current) {
       socketRef.current.on('connect', () => {
         socketRef.current?.emit('joinRoom', 'main');
-        console.log('Log: Chats websocket connection successful');
+        // console.log('Log: Chats websocket connection successful');
       });
+
       /* 연결이 끊기면 로그 발신 */
       socketRef.current.on('disconnect', () => {
-        console.log('Log: Chats websocket disconnected from the server.');
+        // console.log('Log: Chats websocket disconnected from the server.');
       });
     }
+
     return () => {
       if (socketRef.current?.connected) {
         socketRef.current.disconnect();
@@ -64,7 +70,9 @@ const ChatModule = () => {
 
   /* 메시지 호출, 로딩, 그리고 실시간 처리 */
   useEffect(() => {
+
     if (socketRef.current) {
+
       /* 채팅 히스토리를 불러오는 함수 */
       const fetchChatHistory = async () => {
         try {
@@ -80,6 +88,7 @@ const ChatModule = () => {
         }
       };
       fetchChatHistory();
+
       /* 서버에서 newMessage 라는 제목으로 메시지를 발송, 여기서 받아서 처리 */
       socketRef.current.on('newMessage', (receivedMessage: ChatMessage) => {
         setChat((prevChat) => [...prevChat, receivedMessage]);
@@ -91,6 +100,7 @@ const ChatModule = () => {
 
   /* 채팅 스크롤 및 유저네임 클릭 기능 관리 (react에서 추천되는 방식은 아니나, 라이브러리 한계로 부득이하게 적용) */
   useEffect(() => {
+
     const messageList = document.querySelector('.message-list');
     if (messageList) {
       const lastMessage = messageList.querySelector('.rce-container-mbox:last-child');
@@ -98,6 +108,7 @@ const ChatModule = () => {
         lastMessage.scrollIntoView({ behavior: 'smooth' });
       }
     }
+
     const messageTitles = document.querySelectorAll('.rce-mbox-title');
     messageTitles.forEach((title) => {
       const htmlTitle = title as HTMLElement;
@@ -107,9 +118,11 @@ const ChatModule = () => {
 
   /* API나 웹소켓으로 받은 채팅 메시지를 react-chat-element에서 해석 가능하도록 변환하는 함수 */
   const transformMessage = (msg: ChatMessage, currentUser: User | null) => {
+
     const currentUserHandle = currentUser?.email.split('@')[0].trim().toLowerCase();
     const senderHandle = msg.chatSenderID.trim().toLowerCase();
     const isCurrentUser = currentUserHandle === senderHandle;
+
     return {
       id: msg.chatMessageID,
       position: isCurrentUser ? 'right' : 'left',
@@ -122,6 +135,7 @@ const ChatModule = () => {
 
   /* 메시지를 서버로 전송하는 함수 */
   const onMessageSubmit = useCallback(() => {
+
     if (user && message && socketRef.current) {
       const currentUserHandle = user?.email.split('@')[0].trim().toLowerCase();
       const newMessage = {
@@ -268,20 +282,3 @@ const ChatModule = () => {
   );
 };
 export default ChatModule;
-
-{/* <div style={messageListStyle} className='min-h-[100%]'>
-{messageListArray.length > 0 ? (
-  <MessageList
-    toBottomHeight={'100%'}
-    className='message-list'
-    referance={messageListRef}
-    dataSource={messageListArray}
-    lockable={true}
-    messageBoxStyles={{ backgroundColor: '#333333' }} // Darker boxes for each message
-    notchStyle={{ fill: '#333333' }}
-  />
-) : (
-  <div style={{ marginLeft: "20px" }}>
-    <p>No chats in the last 12 hours.</p>
-  </div>
-)} */}

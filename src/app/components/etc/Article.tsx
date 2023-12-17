@@ -31,7 +31,7 @@ const Article: React.FC<ArticleProps> = ({ dID }) => {
 
         const combinedArticles = [...liveResponse.data, ...archiveResponse.data];
         setArticles(combinedArticles);
-        console.log("Log: Articles data loaded successfully");
+        // console.log("Log: Articles data loaded successfully");
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err.message);

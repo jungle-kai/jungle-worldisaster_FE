@@ -104,7 +104,7 @@ const EarthCesium = () => {
   const [rightSidebarOpen, setRightSidebarOpen] = useRecoilState(rightSidebarState);
   const [leftSidebarOpen, setLeftSidebarOpen] = useRecoilState(leftSidebarState);
   const setSelectedPinState = useSetRecoilState(selectedPinState);
-  const [selectedEntity, setSelectedEntity] = useState<Entity|null>(null);
+  const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
   const [deletPoint, setDeletPoint] = useRecoilState(deletAlertPoint)
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -203,7 +203,7 @@ const EarthCesium = () => {
         style: IonWorldImageryStyle.AERIAL_WITH_LABELS,
       }).then((imageryProvider: any) => {
         viewer.scene.imageryLayers.addImageryProvider(imageryProvider);
-        console.log(`Log: Layout loaded successfully.`)
+        // console.log(`Log: Layout loaded successfully.`)
       }).catch((err: Error) => {
         console.log(`Log: Failed to load layout: ${err}`);
       });
@@ -228,7 +228,7 @@ const EarthCesium = () => {
       setCountryData(cData.data)
       setData(oldData.data.concat(newData.data));
       setCustom(new CustomDataSource('Disasters'));
-      console.log(`Log: Data load successful.`);
+      // console.log(`Log: Data load successful.`);
     } catch (err) {
       console.log('Log: Data load failed.', err);
     }
@@ -244,7 +244,7 @@ const EarthCesium = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
       setAlertData(response.data);
-      console.log("Log: Alert data load success.");
+      // console.log("Log: Alert data load success.");
       setIsDataLoaded(true);
     } catch (err) {
       console.log('Log: Alert data load failed.', err);
@@ -288,7 +288,7 @@ const EarthCesium = () => {
 
         custom.entities.add(alertPointEntity);
         custom.entities.add(alertEllipseEntity);
-        console.log("Log: Alert data apply success.")
+        // console.log("Log: Alert data apply success.")
       }
     });
   }
@@ -377,10 +377,10 @@ const EarthCesium = () => {
 
   useEffect(() => {
     if (isDataLoaded)
-    alertLoadData()
+      alertLoadData()
   }, [isDataLoaded])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!custom || !viewerRef.current) return;
     applyAlertData()
   }, [mailAlarmInfo, alertData])
@@ -719,7 +719,7 @@ const EarthCesium = () => {
     if (selectedEntity && selectedEntity !== entity) {
       resetEntityColor(selectedEntity);
     }
-    
+
     changeEntityColor(entity);
     setSelectedEntity(entity);
 
@@ -796,15 +796,15 @@ const EarthCesium = () => {
   }, [viewerRef.current]);
 
   // 우클릭 포인터 삭제 로직
-  useEffect(()=>{
+  useEffect(() => {
     const viewer = viewerRef.current;
     if (!viewer || !viewer.scene || !viewer.camera) {
       return;
     }
-    if (deletPoint !== "subscribe"){
+    if (deletPoint !== "subscribe") {
       viewer.entities.removeById(String(mailAlarmInfo.objectId))
     }
-  },[deletPoint])
+  }, [deletPoint])
 
   // 클릭된 엔티티 변경 감지
   useEffect(() => {

@@ -59,7 +59,7 @@ export const MailAlertModule = () => {
       setIsLoaded(true); // 로딩 시작
       try {
         const locationName = await getLocationName(String(alertInfo.alertLatitude), String(alertInfo.alertLongitude));
-        console.log(locationName)
+        // console.log(locationName)
         setPlaceName(locationName);
       } catch (error) {
         console.error('Error updating location name:', error);
@@ -113,15 +113,17 @@ export const MailAlertModule = () => {
         alertLevelRed: alertLevelRed,
         alertLevelOrange: alertLevelOrange,
         alertLevelGreen: alertLevelGreen,
-        // memo: alertInfo.memo,
       }
       const response = await axios.post(`https://worldisaster.com/api/emailAlerts/`, postData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log(response.data);
+
+      // console.log(response.data);
       setAlertInfo(prevInfo => ({ ...prevInfo, newAlertData: response.data }));
+
     } catch (error) {
-      console.log("error", error);
+      console.log("Log: Mail alert error", error);
+
     } finally {
       getLocationName(String(alertInfo.alertLatitude), String(alertInfo.alertLongitude));
       setAlertInfo({ ...alertInfo, delete: true });

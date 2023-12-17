@@ -25,7 +25,7 @@ export const AlertModule = () => {
     /* 소켓 연결이 있을 때만 사용 */
     if (socketRef.current) {
       socketRef.current.on('connect', () => {
-        console.log('Log: Alerts websocket connection successful');
+        // console.log('Log: Alerts websocket connection successful');
       });
 
       socketRef.current.on('disaster-alert', (message) => {
@@ -89,7 +89,7 @@ export const AlertModule = () => {
       });
 
       socketRef.current.on('disconnect', () => {
-        console.log('Log: Alerts websocket disconnected from server'); // Debug-only
+        // console.log('Log: Alerts websocket disconnected from server'); // Debug-only
       });
     }
 

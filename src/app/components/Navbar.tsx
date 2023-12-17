@@ -41,7 +41,7 @@ export const Navbar = () => {
           });
           setUserInfo(response.data);
           setLoginState({ isLoggedIn: true, userInfo: response.data });
-          console.log('Log: Please provide login information', response);
+          // console.log('Log: Please provide login information', response);
         } catch (error) {
           console.error('Log: Error fetching user info:', error);
         }
@@ -96,7 +96,7 @@ export const Navbar = () => {
           },
         }
       );
-      console.log("Log: Successfully deleted your account:", response.data);
+      // console.log("Log: Successfully deleted your account:", response.data);
       if (response.data.redirectUrl) {
         window.location.href = response.data.redirectUrl;
       } else {
